@@ -1,0 +1,17 @@
+header {
+  padding: 15px 25px;
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 5px 0 10px rgb(0 0 0 / 0.2);
+}
+header h2 {
+  font-size: 22px;
+}
+header nav ul {
+  display: flex;
+  gap: 30px;
+}
+header nav ul li {
+  font-size: 15px;
+  cursor: pointer;
+}
