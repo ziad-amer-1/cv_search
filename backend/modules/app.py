@@ -23,7 +23,7 @@ api = Api(app=app, security='Bearer Auth', authorizations=authorizations)
 if app.config['ENABLE_CORS']:
   CORS(app, resources={r'/*': {'origins': '*'}})
 
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
+app.config['MAX_CONTENT_LENGTH'] = 1000 * 1024 * 1024
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + getpath("/database/cv.db")

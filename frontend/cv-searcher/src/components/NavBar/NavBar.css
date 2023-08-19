@@ -6,6 +6,7 @@ header {
 }
 header h2 {
   font-size: 22px;
+  margin-right: 20px;
 }
 header nav ul {
   display: flex;
@@ -14,4 +15,5 @@ header nav ul {
 header nav ul li {
   font-size: 15px;
   cursor: pointer;
+  margin-left: 10px;
 }

@@ -11,6 +11,12 @@ function Search({ setNumberOfFiles }) {
   const [pdfFiles, setPdfFiles] = useState([])
   const [isLoading, setIsLoading] = useState(true)
 
+  function splitFilename(filename) {
+    const reversed = filename?.split(".").reverse()
+    const name = reversed.slice(1).reverse().join(".")
+    return name
+  }
+
   async function handleSearchSubmit(e) {
     e.preventDefault()
     if (SearchInput.current?.value?.trim() === "") {
@@ -23,10 +29,15 @@ function Search({ setNumberOfFiles }) {
       return
     }
     try {
-      const response = await search(SearchInput.current?.value?.trim())
-      const matchingFiles = response.data?.matching_files?.map(
-        (file) => file.split(".")[0]
-      )
+      const inputValue = SearchInput.current?.value?.trim()
+      const keywordsSeparatedByComma = inputValue.split(/\s+/).join(",")
+      const response = await search(keywordsSeparatedByComma)
+      const matchingFiles = response.data?.matching_files
+      //   ?.map(
+      //   (file) => file.split(".")[0]
+      // )
+      // console.log("before: " + response.data?.matching_files?.map((file) => file.split(".")[0])[0])
+      // console.log("after : " + response.data?.matching_files?.map((file) => splitFilename(file))[0])
       setPdfFiles(matchingFiles)
       setNumberOfFiles(matchingFiles.length)
     } catch (err) {
@@ -63,7 +74,7 @@ function Search({ setNumberOfFiles }) {
       <form onSubmit={handleSearchSubmit}>
         <input
           type="text"
-          placeholder="write keyword"
+          placeholder="write keywords separated by space"
           className="search-input"
           ref={SearchInput}
         />
@@ -77,9 +88,10 @@ function Search({ setNumberOfFiles }) {
             <div
               className="cv"
               key={i}
-              onClick={() => openPdfFile(file.split(".")[0] + ".pdf")}
+              title={splitFilename(file)}
+              onClick={() => openPdfFile(splitFilename(file) + ".pdf")}
             >
-              {file.split(".")[0]}
+              {splitFilename(file) ?? "null"}
               <img src={PdfIcon} alt="Pdf Icon" />
             </div>
           ))}
